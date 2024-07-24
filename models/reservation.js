@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
-const Annonce = require('./annonces');
+const Annonce = require('./annonce');
+const Compte = require('./compte');
 
 const Reservation = sequelize.define('Reservation', {
     id: {
@@ -16,7 +17,7 @@ const Reservation = sequelize.define('Reservation', {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    annonceId: {
+    id_annonce: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -24,12 +25,23 @@ const Reservation = sequelize.define('Reservation', {
             key: 'id',
         },
     },
+    id_compte: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Compte,
+            key: 'id',
+        },
+    }
 }, {
     tableName: 'reservation',
     timestamps: false,
 });
 
-Annonce.hasMany(Reservation, { foreignKey: 'annonceId' });
-Reservation.belongsTo(Annonce, { foreignKey: 'annonceId' });
+Annonce.hasMany(Reservation, { foreignKey: 'id_annonce' });
+Reservation.belongsTo(Annonce, { foreignKey: 'id_annonce' });
+
+Compte.hasMany(Reservation, { foreignKey: 'id_compte' });
+Reservation.belongsTo(Compte, { foreignKey: 'id_compte' });
 
 module.exports = Reservation;
