@@ -4,8 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
-
+var sequelize = require('./config/database');
 var indexRouter = require('./routes/index');
+var compteRouter = require('./routes/compte');
+var annonceRouter = require('./routes/annonce');
+var reservationRouter = require('./routes/reservation');
 
 var app = express();
 
@@ -18,6 +21,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/compte',compteRouter)
+app.use('/annonce',annonceRouter)
+app.use('/reservation',reservationRouter)
+
+sequelize.sync().then(() => {
+  app.listen(3001, () => {
+    console.log('Server is running on port 3000');
+  });
+});
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const compteService = require('../services/compteService');
+
+
+const compteService = require('../services/compte');
 
 
 router.post('/', async (req, res) => {
@@ -11,3 +13,5 @@ router.post('/', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
+module.exports = router;
