@@ -1,4 +1,4 @@
-const Compte = require('../models/comptes');
+const Compte = require('../models/compte');
 
 class CompteService {
     async createCompte(data) {
@@ -56,6 +56,7 @@ class CompteService {
             throw new Error(error.message);
         }
     }
+
 }
 
 module.exports = new CompteService();
