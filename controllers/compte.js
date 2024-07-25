@@ -5,7 +5,7 @@ const jwtToken = require('../utils/generateToken');
 const login = async (req) => {
     const {mail, password} = req.body;
     var id = await CompteService.verifLogin(mail, password)
-    if (Number.isInteger(id)) {
+    if (id) {
         const userPayload = await CompteService.getCompteById(id);
 
         return jwtToken.generateToken(userPayload.dataValues);
