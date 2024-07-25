@@ -14,6 +14,7 @@
     "pug": "2.0.0-beta11",
     "helmet": "^4.6.0",
     "sequelize": "^6.37.3",
-    "mysql2": "^2.2.5"
+    "mysql2": "^2.2.5",
+    "jsonwebtoken": "^9.0.2"
   }
 }
