@@ -9,8 +9,10 @@ var indexRouter = require('./routes/index');
 var compteRouter = require('./routes/compte');
 var annonceRouter = require('./routes/annonce');
 var reservationRouter = require('./routes/reservation');
+const cors = require('cors');
 
 var app = express();
+app.use(cors());
 
 app.use(helmet()); // Sécurité
 
@@ -27,7 +29,7 @@ app.use('/reservation',reservationRouter)
 
 sequelize.sync().then(() => {
   app.listen(3001, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running on port 3001');
   });
 });
 
