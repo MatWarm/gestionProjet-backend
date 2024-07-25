@@ -1,6 +1,5 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
@@ -9,7 +8,7 @@ var indexRouter = require('./routes/index');
 var compteRouter = require('./routes/compte');
 var annonceRouter = require('./routes/annonce');
 var reservationRouter = require('./routes/reservation');
-
+const myMiddleware = require('./middleware/middleWare');
 var app = express();
 
 app.use(helmet()); // Sécurité
@@ -19,8 +18,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(myMiddleware);
 
-app.use('/', indexRouter);
+
+app.use('/home', indexRouter);
 app.use('/compte',compteRouter)
 app.use('/annonce',annonceRouter)
 app.use('/reservation',reservationRouter)

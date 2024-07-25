@@ -10,7 +10,6 @@ const Compte = sequelize.define('Compte', {
     mail: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
     },
     password: {
         type: DataTypes.STRING,
@@ -24,6 +23,11 @@ const Compte = sequelize.define('Compte', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    etat:{
+        type:DataTypes.BOOLEAN,
+        allowNull:false,
+        defaultValue: true
+    }
 }, {
     tableName: 'compte',
     timestamps: false,
