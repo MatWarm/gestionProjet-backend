@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
-
+  
 router.post('/login', async (req, res) => {
     try{
         const token = await compteController.login(req)
@@ -32,7 +32,6 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-
 router.delete('/:id', async (req, res) => {
     try {
         const compte = await compteService.deleteCompte(req.params.id);
@@ -50,4 +49,5 @@ router.get('/:mail', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+
 module.exports = router;

@@ -9,16 +9,13 @@ var indexRouter = require('./routes/index');
 var compteRouter = require('./routes/compte');
 var annonceRouter = require('./routes/annonce');
 var reservationRouter = require('./routes/reservation');
+
 const myMiddleware = require('./middleware/middleWare');
 var app = express();
 var path = require('path');
 
-
-
-app.use(helmet());
-
+app.use(helmet()); // Sécurité
 app.use(cors());
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
