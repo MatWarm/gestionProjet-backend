@@ -10,21 +10,21 @@ class CompteService {
         }
     }
 
-    async getCompteById(id) {
-        try {
-            const compte = await Compte.findByPk(id);
-            if (!compte) {
+    async verifLogin(mail,password){
+        try{
+            const compte = await Compte.findOne({where: {mail: mail, password: password, etat: true}});
+            if(!compte){
                 throw new Error('Compte not found');
             }
-            return compte;
-        } catch (error) {
+            return compte.id;
+        }catch(error){
             throw new Error(error.message);
         }
     }
 
-    async updateCompte(id, data) {
+    async updateCompte(id,data) {
         try {
-            const compte = await Compte.findByPk(id);
+            var compte = await Compte.findByPk(id);
             if (!compte) {
                 throw new Error('Compte not found');
             }
@@ -35,23 +35,68 @@ class CompteService {
         }
     }
 
-    async deleteCompte(id) {
+    async getCompteById(id) {
         try {
-            const compte = await Compte.findByPk(id);
+            const compte = await Compte.findByPk(id, {
+                    attributes: ['id', 'mail', 'nom', 'prenom', 'etat']
+                });
+
             if (!compte) {
                 throw new Error('Compte not found');
             }
-            await compte.destroy();
             return compte;
         } catch (error) {
             throw new Error(error.message);
         }
     }
 
-    async getAllComptes() {
+    async getActiveCompteById(id) {
         try {
-            const comptes = await Compte.findAll();
-            return comptes;
+            const compte = await Compte.findByPk(id, {
+                attributes: ['id', 'mail', 'nom', 'prenom', 'etat'],
+                where : {etat : true}});
+
+            if (!compte) {
+                throw new Error('Compte not found');
+            }
+            return compte;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async getCompteByMail(mail) {
+        try {
+            const compte = await Compte.findOne({
+                attributes: ['id', 'mail', 'nom', 'prenom',],
+                where: {mail: mail}
+            });
+
+            if (!compte) {
+                throw new Error('Compte not found');
+            }
+            return compte;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+
+    async deleteCompte(id) {
+        try {
+            const compte = await this.getActiveCompteById(id);
+            if (!compte) {
+                throw new Error('Compte not found');
+            }
+
+            const data = {
+                nom: 'deleted user',
+                prenom: 'deleted user',
+                mail: 'deleted user',
+                password: 'deleted user',
+                etat:false
+            }
+
+            return await this.updateCompte(id, data);
         } catch (error) {
             throw new Error(error.message);
         }

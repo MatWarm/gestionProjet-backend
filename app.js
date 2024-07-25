@@ -1,18 +1,18 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
+const cors = require('cors');
 var sequelize = require('./config/database');
 var indexRouter = require('./routes/index');
 var compteRouter = require('./routes/compte');
 var annonceRouter = require('./routes/annonce');
 var reservationRouter = require('./routes/reservation');
-const cors = require('cors');
 
+const myMiddleware = require('./middleware/middleWare');
 var app = express();
-
+var path = require('path');
 
 app.use(helmet()); // Sécurité
 app.use(cors());
@@ -22,7 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// Configuration CORS
+
+app.use(myMiddleware);
+
+app.use('/home', indexRouter);
 app.use('/compte',compteRouter)
 app.use('/annonce',annonceRouter)
 app.use('/reservation',reservationRouter)

@@ -26,7 +26,7 @@ const Reservation = sequelize.define('Reservation', {
         },
     },
     id_compte: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
             model: Compte,

@@ -3,7 +3,7 @@ const router = express.Router();
 
 
 const compteService = require('../services/compte');
-
+const compteController = require('../controllers/compte');
 
 router.post('/', async (req, res) => {
     try {
@@ -13,11 +13,38 @@ router.post('/', async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 });
+  
+router.post('/login', async (req, res) => {
+    try{
+        const token = await compteController.login(req)
+        res.status(200).json({"token" : token});
+    }catch (error){
+        res.status(400).json({ error: error.message });
+    }
+});
 
-router.get('/', async (req, res) => {
+router.patch('/:id', async (req, res) => {
     try {
-        const compte = await compteService.getAllComptes();
-        res.status(201).json(compte);
+        const compte = await compteService.updateCompte(req.params.id, req.body);
+        res.status(200).json(compte);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const compte = await compteService.deleteCompte(req.params.id);
+        res.status(200).json(compte);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+ });
+
+router.get('/:mail', async (req, res) => {
+    try {
+        const compte = await compteService.getCompteByMail(req.params.mail);
+        res.status(200).json(compte);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
