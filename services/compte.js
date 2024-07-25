@@ -12,7 +12,7 @@ class CompteService {
 
     async verifLogin(mail,password){
         try{
-            const compte = await Compte.findOne({where: {mail: mail, password: password}});
+            const compte = await Compte.findOne({where: {mail: mail, password: password, etat: true}});
             if(!compte){
                 throw new Error('Compte not found');
             }
@@ -53,8 +53,8 @@ class CompteService {
     async getActiveCompteById(id) {
         try {
             const compte = await Compte.findByPk(id, {
-                attributes: ['id', 'mail', 'nom', 'prenom', 'etat']
-            }, {where : {etat : true}});
+                attributes: ['id', 'mail', 'nom', 'prenom', 'etat'],
+                where : {etat : true}});
 
             if (!compte) {
                 throw new Error('Compte not found');
@@ -65,6 +65,21 @@ class CompteService {
         }
     }
 
+    async getCompteByMail(mail) {
+        try {
+            const compte = await Compte.findOne({
+                attributes: ['id', 'mail', 'nom', 'prenom',],
+                where: {mail: mail}
+            });
+
+            if (!compte) {
+                throw new Error('Compte not found');
+            }
+            return compte;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
 
     async deleteCompte(id) {
         try {
