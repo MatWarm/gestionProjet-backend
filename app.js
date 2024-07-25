@@ -10,6 +10,7 @@ var annonceRouter = require('./routes/annonce');
 var reservationRouter = require('./routes/reservation');
 const myMiddleware = require('./middleware/middleWare');
 var app = express();
+var path = require('path');
 
 app.use(helmet()); // Sécurité
 
