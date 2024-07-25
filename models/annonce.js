@@ -40,6 +40,10 @@ const Annonce = sequelize.define('Annonce', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    prix_location: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
 }, {
     tableName: 'annonce',
     timestamps: false,

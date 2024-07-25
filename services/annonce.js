@@ -1,11 +1,20 @@
-const annonce = require('../models/annonce');
+const Annonce = require('../models/annonce');
 
 class AnnonceService{
 
     async getAllAnnonces() {
         try {
-            const annonces = await annonce.findAll();
+            const annonces = await Annonce.findAll();
             return annonces;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    }
+    
+    async createAnnonce(data) {
+        try {
+            const annonce = await Annonce.create(data);
+            return annonce;
         } catch (error) {
             throw new Error(error.message);
         }
