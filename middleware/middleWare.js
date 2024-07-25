@@ -6,7 +6,7 @@ const middleware = (req, res, next) => {
 
     const whitelist = [
         { url: '/compte/login', method: 'POST' },
-        { url: '/compte/', method: 'GET' },
+        { url: '/compte/', method: 'POST' },
         { url: '/annonce/', method: 'GET' }
     ];
 
