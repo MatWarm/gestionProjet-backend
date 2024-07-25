@@ -9,7 +9,7 @@ const Annonce = sequelize.define('Annonce', {
         autoIncrement: true,
     },
     id_compte: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
             model: Compte,

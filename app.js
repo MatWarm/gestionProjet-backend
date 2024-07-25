@@ -3,6 +3,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
+const cors = require('cors');
 var sequelize = require('./config/database');
 var indexRouter = require('./routes/index');
 var compteRouter = require('./routes/compte');
@@ -12,15 +13,21 @@ const myMiddleware = require('./middleware/middleWare');
 var app = express();
 var path = require('path');
 
-app.use(helmet()); // Sécurité
+
+
+app.use(helmet());
+
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(myMiddleware);
 
+// Configuration CORS
+
+app.use(myMiddleware);
 
 app.use('/home', indexRouter);
 app.use('/compte',compteRouter)
@@ -29,7 +36,7 @@ app.use('/reservation',reservationRouter)
 
 sequelize.sync().then(() => {
   app.listen(3001, () => {
-    console.log('Server is running on port 3000');
+    console.log('Server is running on port 3001');
   });
 });
 

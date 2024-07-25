@@ -42,5 +42,12 @@ router.delete('/:id', async (req, res) => {
     }
  });
 
-
+router.get('/:mail', async (req, res) => {
+    try {
+        const compte = await compteService.getCompteByMail(req.params.mail);
+        res.status(200).json(compte);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
 module.exports = router;
