@@ -7,7 +7,7 @@ const login = async (req) => {
     var id = await CompteService.verifLogin(mail, password)
     if (id) {
         const userPayload = await CompteService.getCompteById(id);
-
+        console.log('userPayload');
         return jwtToken.generateToken(userPayload.dataValues);
     } else {
         throw new Error('Invalid credentials');
