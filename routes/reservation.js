@@ -13,6 +13,16 @@ router.get('/voiture/:idAnnonce', async (req, res) => {
     }
 });
 
+router.get('/profil/:idProfil', async (req, res) => {
+    try {
+        // console.log(req.params.idAnnonce);
+        const reservation = await reservationService.getReservationByProfilId(req.params.idProfil);
+        res.status(201).json(reservation);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const reservation = await reservationService.createReservation(req.body);
